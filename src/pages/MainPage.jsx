@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../config/Api";
+import UserCard from "../components/UserCard";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+
 
 
 function MainPage() {
     const [error, setError] = useState(null);
-    const [profiles, setProfileList] = useState([]);
+    const [users, setUserList] = useState([]);
     const [local] = axios;
     const [filters] = useState({
         "role" : "Controller"
@@ -18,7 +21,7 @@ function MainPage() {
             }
         })
         .then(response => {
-            setProfileList(response.data);
+            setUserList(response.data);
         })
         .catch(err => {
             console.error(err);
@@ -29,7 +32,7 @@ function MainPage() {
     }, [filters, local]);
 
 
-    console.log(profiles);
+    console.log(users);
     const clearError = () => {
         setError(null);
     };
@@ -48,13 +51,24 @@ function MainPage() {
         return () => clearInterval(errors);
     }, [error]);
 
+    // const userCards = users.map((user) => (
+    //     <UserCard key={user.id} user={user} />
+    // ));
+
     return (
-        <div>
-            <h1>Profiles</h1>
-            <p>{profiles[0]?.username|| "Loading..."}</p>
-            <p>{profiles[0]?.role || "Loading..."}</p>
-            <p>{profiles[0]?.bio || "Loading..."}</p>
-            </div>
+        <div className="flex justify-center items-center min-h-screen p-4">
+            <Carousel className="w-full max-w-lg">
+                <CarouselContent>
+                    {users.map((user) => (
+                            <CarouselItem key={user.id}>
+                                <UserCard key={user.id} user={user} />
+                            </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
+        </div>
     );
 }
 
