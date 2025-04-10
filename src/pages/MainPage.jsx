@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "../config/Api";
 import UserCard from "../components/UserCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import FiltersDropdown from "@/components/Filters";
 
 
 
@@ -10,8 +11,7 @@ function MainPage() {
     const [error, setError] = useState(null);
     const [users, setUserList] = useState([]);
     const [local] = axios;
-    const [filters] = useState({
-        "role" : "Controller"
+    const [filters, setFilters] = useState({
     });
 
     useEffect(() => {
@@ -57,6 +57,7 @@ function MainPage() {
 
     return (
         <div className="flex justify-center items-center min-h-screen p-4">
+            <FiltersDropdown onChange={setFilters} />
             <Carousel className="w-full max-w-lg">
                 <CarouselContent>
                     {users.map((user) => (
