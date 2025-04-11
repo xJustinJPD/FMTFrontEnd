@@ -21,6 +21,7 @@ function MainPage() {
             }
         })
         .then(response => {
+            console.log("RESPONSE", response.data);
             setUserList(response.data);
         })
         .catch(err => {
@@ -32,7 +33,7 @@ function MainPage() {
     }, [filters, local]);
 
 
-    console.log(users);
+    console.log("response",users);
     const clearError = () => {
         setError(null);
     };
@@ -60,11 +61,15 @@ function MainPage() {
             <FiltersDropdown onChange={setFilters} />
             <Carousel className="w-full max-w-lg">
                 <CarouselContent>
-                    {users.map((user) => (
-                            <CarouselItem key={user.id}>
-                                <UserCard key={user.id} user={user} />
-                            </CarouselItem>
-                    ))}
+                {Array.isArray(users) && users.length > 0 ? (
+                users.map((user) => (
+                    <CarouselItem key={user.id}>
+                    <UserCard key={user.id} user={user} />
+                    </CarouselItem>
+                ))
+                ) : (
+                <p>No users found.</p>
+                )}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />

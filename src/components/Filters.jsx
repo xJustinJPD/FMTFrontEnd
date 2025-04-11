@@ -20,6 +20,7 @@ import { useState } from "react";
 
         return (
             <div className="p-4 bg-white rounded shadow mb-6 w-full max-w-xl">
+            <h2 className="text-lg font-semibold mb-4">Set Filters: {JSON.stringify(filters)}</h2>
             <div className="flex flex-col gap-4">
                 <select name="role" onChange={handleChange} className="p-2 border rounded">
                 <option value="">Select Role</option>

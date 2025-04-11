@@ -5,7 +5,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 // Routes
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
-
+import RegisterPage from "./pages/RegisterPage";
 
 
 
@@ -56,6 +56,7 @@ import LoginPage from './pages/LoginPage';
         {/* {protectedRoutes} */}
         <Route path='/' element={<MainPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/register' element={<RegisterPage/>}/>
         </Routes>
         {/* <Footer/> */}
     </Router>
