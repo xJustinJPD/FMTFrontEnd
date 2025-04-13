@@ -28,7 +28,7 @@ const LoginForm = () => {
         })
         .then(response => {
             console.log(response);
-            const { token } = response.data.access_token;
+            const  token  = response.data.access_token;
             onAuthenticated(true, token);
             navigate('/');
         })

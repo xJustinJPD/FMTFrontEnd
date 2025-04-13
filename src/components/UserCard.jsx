@@ -7,12 +7,32 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Button } from './ui/button';
+import axios from "../config/Api";
+
+
 
 const UserCard = ({ user }) => {
+        const [local] = axios;
+
+    const onPress = async () => {
+        try{
+            const response = await local.post(
+                `/like/${user.id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            )
+            console.log( "like sent", response.data);
+        } catch (error) {
+            console.error("Error liking user:", error);
+        }
+    }
 
     return (
         <>
-        <Link to={`/users/${user.id}`}>
                 <Card className="w-full bg-base-100 shadow-xl">
                     <CardHeader>
                         <CardTitle>{user.username}</CardTitle>
@@ -21,11 +41,13 @@ const UserCard = ({ user }) => {
                     <CardContent>
                         {user.bio}
                     </CardContent>
+                    <Button onClick={onPress} variant="outline" className="w-full bg-base-100 shadow-xl">
+                        Match with user
+                    </Button>
                     {/* <CardFooter>
                         <p>View Profile</p>
                     </CardFooter> */}
                 </Card>
-            </Link>
         </>
     );
 };

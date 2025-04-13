@@ -4,12 +4,16 @@ import axios from "../config/Api";
 import UserCard from "../components/UserCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import FiltersDropdown from "@/components/Filters";
+import MatchCard from "@/components/MatchCard";
+import LogoutButton from "@/components/Logout";
+
 
 
 
 function MainPage() {
     const [error, setError] = useState(null);
     const [users, setUserList] = useState([]);
+    const [likes, setLikesList] = useState([]);
     const [local] = axios;
     const [filters, setFilters] = useState({
     });
@@ -22,6 +26,7 @@ function MainPage() {
         })
         .then(response => {
             console.log("RESPONSE", response.data);
+            console.log("my token" + `Bearer ${localStorage.getItem('token')}`)
             setUserList(response.data);
         })
         .catch(err => {
@@ -31,6 +36,25 @@ function MainPage() {
             }
         });
     }, [filters, local]);
+
+    useEffect(() => {
+        local.get("/likes",{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+        })
+        .then(response => {
+            console.log("LIKES RESPONSE", response.data);
+
+            setLikesList(response.data);
+        })
+        .catch(err => {
+            console.error(err);
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            }
+        });
+    }, []);
 
 
     console.log("response",users);
@@ -56,7 +80,11 @@ function MainPage() {
     //     <UserCard key={user.id} user={user} />
     // ));
 
+
+
     return (
+        <>
+        <LogoutButton/>
         <div className="flex justify-center items-center min-h-screen p-4">
             <FiltersDropdown onChange={setFilters} />
             <Carousel className="w-full max-w-lg">
@@ -74,7 +102,22 @@ function MainPage() {
                 <CarouselPrevious />
                 <CarouselNext />
             </Carousel>
+
         </div>
+        <div className="flex justify-center items-center min-h-screen p-4">
+                <h2 className="text-lg font-semibold mb-4">People You've Liked:</h2>
+                {likes.length === 0 ? (
+                    <p>No likes sent yet!</p>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {likes.map((like) => (
+                            <MatchCard key={like.liked_id} user={like.liked_user} />
+                        ))}
+                    </div>
+                )}
+            </div>
+
+        </>
     );
 }
 
