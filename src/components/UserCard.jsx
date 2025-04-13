@@ -18,7 +18,7 @@ const UserCard = ({ user }) => {
     const onPress = async () => {
         try{
             const response = await local.post(
-                `/like/${user.id}`,
+                `/like/${user.id}`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,

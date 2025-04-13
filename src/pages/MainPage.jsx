@@ -111,7 +111,7 @@ function MainPage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {likes.map((like) => (
-                            <MatchCard key={like.liked_id} user={like.liked_user} />
+                            <MatchCard key={like.liked_id} user={like.liked} />
                         ))}
                     </div>
                 )}
