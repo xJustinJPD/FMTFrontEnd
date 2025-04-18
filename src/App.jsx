@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from "./pages/RegisterPage";
+import SocialPage from "./pages/Social";
 
 
 
@@ -57,6 +58,7 @@ import RegisterPage from "./pages/RegisterPage";
         <Route path='/' element={<MainPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/register' element={<RegisterPage/>}/>
+        <Route path='/social' element={<SocialPage/>}/>
         </Routes>
         {/* <Footer/> */}
     </Router>
