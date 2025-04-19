@@ -7,6 +7,8 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from "./pages/RegisterPage";
 import SocialPage from "./pages/Social";
+import GroupPage from "./pages/GroupPage";
+import AddUserPage from "./pages/AddUsersPage";
 
 
 
@@ -59,6 +61,8 @@ import SocialPage from "./pages/Social";
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/register' element={<RegisterPage/>}/>
         <Route path='/social' element={<SocialPage/>}/>
+        <Route path='/groups/:group_id' element={<GroupPage/>}/>
+        <Route path='/add_user/:group_id' element={<AddUserPage/>}/>
         </Routes>
         {/* <Footer/> */}
     </Router>
