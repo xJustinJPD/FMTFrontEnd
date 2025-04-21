@@ -42,7 +42,7 @@ const RegisterForm = () => {
         })
         .then(response => {
             console.log(response);
-            navigate('/login');
+            navigate('/firstlogin');
         })
         .catch(err => {
             console.error(err);

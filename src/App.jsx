@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SocialPage from "./pages/Social";
 import GroupPage from "./pages/GroupPage";
 import AddUserPage from "./pages/AddUsersPage";
+import FirstTimeLoginForm from "./components/FirstTimeLoginForm";
 
 
 
@@ -63,6 +64,7 @@ import AddUserPage from "./pages/AddUsersPage";
         <Route path='/social' element={<SocialPage/>}/>
         <Route path='/groups/:group_id' element={<GroupPage/>}/>
         <Route path='/add_user/:group_id' element={<AddUserPage/>}/>
+        <Route path='/firstlogin' element={<FirstTimeLoginForm/>}/>
         </Routes>
         {/* <Footer/> */}
     </Router>
