@@ -84,8 +84,7 @@ function MainPage() {
 
     return (
         <>
-        <LogoutButton/>
-        <div className="flex justify-center items-center min-h-screen p-4">
+        <div className=" justify-center items-center min-h-screen p-4">
             <FiltersDropdown onChange={setFilters} />
             <Carousel className="w-full max-w-lg">
                 <CarouselContent>
@@ -104,7 +103,7 @@ function MainPage() {
             </Carousel>
 
         </div>
-        <div className="flex justify-center items-center min-h-screen p-4">
+        <div className=" justify-center items-center min-h-screen p-4">
                 <h2 className="text-lg font-semibold mb-4">People You've Liked:</h2>
                 {likes.length === 0 ? (
                     <p>No likes sent yet!</p>

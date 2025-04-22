@@ -1,16 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function LogoutButton() {
     const navigate = useNavigate();
+    const { logout } = useAuth();
+
 
     const handleLogout = () => {
-        // Remove the JWT token from localStorage (or sessionStorage, cookies, etc.)
-        localStorage.removeItem('token');
+        logout(); // Call the logout function from AuthContext
 
-        // Optionally clear other user-related data (like user info)
-        // localStorage.removeItem('user'); 
-
-        // Redirect to the login page or any page you prefer
+        // Redirect to the login page
         navigate('/login');
     };
 

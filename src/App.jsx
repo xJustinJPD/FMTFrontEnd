@@ -10,6 +10,7 @@ import SocialPage from "./pages/Social";
 import GroupPage from "./pages/GroupPage";
 import AddUserPage from "./pages/AddUsersPage";
 import FirstTimeLoginForm from "./components/FirstTimeLoginForm";
+import Navbar from "./components/Navbar";
 
 
 
@@ -55,7 +56,7 @@ import FirstTimeLoginForm from "./components/FirstTimeLoginForm";
 
     return (
         <Router>
-        {/* <Navbar/> */}
+        <Navbar/>
         <Routes>
         {/* {protectedRoutes} */}
         <Route path='/' element={<MainPage/>}/>

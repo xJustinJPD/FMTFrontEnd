@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setToken(null);
-
     };
 
     return(
