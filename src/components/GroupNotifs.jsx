@@ -5,21 +5,27 @@ function GroupNotifications() {
     const [hasNewGroup, setHasNewGroup] = useState(false);
     const [local] = axios;
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            local.get('/notifications/groups', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            }).then(res => {
-                setHasNewGroup(res.data.length > 0);
-            }).catch(err => {
-                console.error("Polling error", err);
-            });
-        }, 5000); // 5 seconds
+    const checkForNewGroup = () => {
+        local.get('/notifications/groups', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        }).then(res => {
+            setHasNewGroup(res.data.length > 0);
+        }).catch(err => {
+            console.error("Polling error", err);
+        });
+    }
+    
 
-        return () => clearInterval(interval);
-    }, [local]);
+    useEffect(() => {
+        checkForNewGroup(); // Initial check
+        const interval = setInterval(() => {
+            checkForNewGroup(); // Check every 5 seconds
+        }, 5000);
+
+        return () => clearInterval(interval); // Cleanup on unmount
+    },[]);
 
     return hasNewGroup;
 }

@@ -27,7 +27,7 @@ import LogoutButton from "./Logout"
     },
     {
         title: "Profile",
-        url: "#",
+        url: "/profile",
         icon: UserSquare2Icon,
     }
     ]

@@ -12,6 +12,7 @@ import AddUserPage from "./pages/AddUsersPage";
 import FirstTimeLoginForm from "./components/FirstTimeLoginForm";
 import Navbar from "./components/Navbar";
 import GroupNotificationWatcher from "./contexts/GroupWatcher";
+import UserPage from "./pages/Profile";
 
 
 
@@ -68,6 +69,7 @@ import GroupNotificationWatcher from "./contexts/GroupWatcher";
         <Route path='/groups/:group_id' element={<GroupPage/>}/>
         <Route path='/add_user/:group_id' element={<AddUserPage/>}/>
         <Route path='/firstlogin' element={<FirstTimeLoginForm/>}/>
+        <Route path='/profile' element={<UserPage/>}/>
         </Routes>
         {/* <Footer/> */}
     </Router>

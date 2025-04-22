@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 import axios from '../config/Api';
 import { useState, useEffect } from 'react';
+import GroupNotifications from './GroupNotifs';
 
 const GroupCard = ({ group }) => {
     const navigate = useNavigate()
