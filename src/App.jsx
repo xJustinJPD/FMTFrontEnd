@@ -11,6 +11,7 @@ import GroupPage from "./pages/GroupPage";
 import AddUserPage from "./pages/AddUsersPage";
 import FirstTimeLoginForm from "./components/FirstTimeLoginForm";
 import Navbar from "./components/Navbar";
+import GroupNotificationWatcher from "./contexts/GroupWatcher";
 
 
 
@@ -56,6 +57,7 @@ import Navbar from "./components/Navbar";
 
     return (
         <Router>
+        <GroupNotificationWatcher/>
         <Navbar/>
         <Routes>
         {/* {protectedRoutes} */}

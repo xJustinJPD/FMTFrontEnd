@@ -1,4 +1,5 @@
     import { Calendar, Home, Inbox, Search, Settings, UserSquare2Icon } from "lucide-react"
+    import GroupNotifications from "./GroupNotifs"
     
     import {
     Sidebar,
@@ -32,6 +33,7 @@ import LogoutButton from "./Logout"
     ]
     
     export function AppSidebar() {
+    const hasNewGroup = GroupNotifications()
     return (
         <Sidebar>
         <SidebarContent>
@@ -45,6 +47,9 @@ import LogoutButton from "./Logout"
                         <a href={item.url}>
                         <item.icon />
                         <span>{item.title}</span>
+                        {item.title === "Social" && hasNewGroup && (
+                        <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-red-500"></span>
+                        )}
                         </a>
                     </SidebarMenuButton>
                     </SidebarMenuItem>
