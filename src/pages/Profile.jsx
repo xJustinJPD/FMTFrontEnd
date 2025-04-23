@@ -5,6 +5,8 @@ import UserCard from "../components/UserCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import GroupCard from "@/components/GroupCard";
 import { Button } from "@/components/ui/button";
+import { ProfileStatsChart } from "@/components/charts/AreaChart";
+import { StatsPieChart } from "@/components/charts/PieChart";
 
 const UserPage = () => {
             const [error, setError] = useState(null);
@@ -54,7 +56,11 @@ const UserPage = () => {
 
     return (
     <>
+    <div className="flex flex-col items-center justify-center w-full h-full p-4 space-y-4">
         <UserCard key={user.id} user={user} />
+        <ProfileStatsChart last20kills={user?.stats?.last20kills || []} last20deaths={user?.stats?.last20deaths || []}  className="w-full"/>
+        <StatsPieChart last20kills={user?.stats?.last20kills || []} last20deaths={user?.stats?.last20deaths || []} last20assists={user?.stats?.last20assists || []} className="w-full"/>
+        </div>
     </>
     );
     }
