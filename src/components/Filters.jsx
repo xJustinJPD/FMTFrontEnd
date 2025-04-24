@@ -30,34 +30,19 @@ import { useState } from "react";
                 <option value="Sentinel">Sentinel</option>
                 </select>
 
-                <input
-                type="number"
-                name="min_kills"
-                placeholder="Min Kills"
-                onChange={handleChange}
-                className="p-2 border rounded"
-                />
-                <input
-                type="number"
-                name="max_kills"
-                placeholder="Max Kills"
-                onChange={handleChange}
-                className="p-2 border rounded"
-                />
-                <input
-                type="number"
-                name="min_level"
-                placeholder="Min Level"
-                onChange={handleChange}
-                className="p-2 border rounded"
-                />
-                <input
-                type="number"
-                name="max_level"
-                placeholder="Max Level"
-                onChange={handleChange}
-                className="p-2 border rounded"
-                />
+                <select name="role" onChange={handleChange} className="p-2 border rounded">
+                <option value="">Select Rank</option>
+                <option value="IRON">Iron</option>
+                <option value="BRONZE">Bronze</option>
+                <option value="SILVER">Silver</option>
+                <option value="GOLD">Gold</option>
+                <option value="PLATINUM">Platinum</option>
+                <option value="EMERALD">Emerald</option>
+                <option value="DIAMOND">Diamond</option>
+                <option value="MASTER">Master</option>
+                <option value="GRANDMASTER">Grandmaster</option>
+                <option value="CHALLENGER">Challenger</option>
+                </select>
             </div>
             </div>
         );
