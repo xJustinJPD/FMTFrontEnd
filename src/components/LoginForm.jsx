@@ -30,7 +30,7 @@ const LoginForm = () => {
             console.log(response);
             const  token  = response.data.access_token;
             onAuthenticated(true, token);
-            navigate('/');
+            navigate('/home');
         })
         .catch(err => {
             console.error(err);
@@ -53,7 +53,8 @@ const LoginForm = () => {
 
     return (
         <>
-            <div className='grid grid-cols-1 gap-1 justify-items-center m-3'>
+            <div className='grid grid-cols-1 gap-1 justify-items-center m-3 w-full h-full'>
+            <h1 className='text-4xl font-bold'>Welcome to FindMyTeam</h1>
             <h2 className='m-3'><b>Login:</b></h2>
             Email: <input onChange={handleForm} onKeyDown={handleKeyDown} type="text" className='border' name="email" value={form.email}  /> <br />
             Password: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="password" name="password" value={form.password} />

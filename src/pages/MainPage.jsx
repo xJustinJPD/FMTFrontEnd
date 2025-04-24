@@ -6,6 +6,9 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import FiltersDropdown from "@/components/Filters";
 import MatchCard from "@/components/MatchCard";
 import LogoutButton from "@/components/Logout";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import RecievedCard from "@/components/RecievedCard";
+
 
 
 
@@ -14,6 +17,7 @@ function MainPage() {
     const [error, setError] = useState(null);
     const [users, setUserList] = useState([]);
     const [likes, setLikesList] = useState([]);
+    const [likedMe, setLikedMeList] = useState([]);
     const [local] = axios;
     const [filters, setFilters] = useState({
     });
@@ -21,7 +25,7 @@ function MainPage() {
     useEffect(() => {
         local.post("/users", filters,{
             headers: {
-    
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         })
         .then(response => {
@@ -47,6 +51,25 @@ function MainPage() {
             console.log("LIKES RESPONSE", response.data);
 
             setLikesList(response.data);
+        })
+        .catch(err => {
+            console.error(err);
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        local.get("/liked_me",{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+        })
+        .then(response => {
+            console.log("LIKES RESPONSE", response.data);
+
+            setLikedMeList(response.data);
         })
         .catch(err => {
             console.error(err);
@@ -84,10 +107,12 @@ function MainPage() {
 
     return (
         <>
-        <div className=" justify-center items-center min-h-screen p-4">
+        <div className="flex justify-between items-center p-4 bg-secondary">
+        <div className=" justify-center items-center max-h-500 p-4 w-3/4 h-300">
             <FiltersDropdown onChange={setFilters} />
-            <Carousel className="w-full max-w-lg">
-                <CarouselContent>
+            <div className="flex justify-center items-center mb-4 mt-6">
+            <Carousel className="justify-items-center items-center w-full max-w-lg">
+                <CarouselContent className="w-full justify-items-center items-center">
                 {Array.isArray(users) && users.length > 0 ? (
                 users.map((user) => (
                     <CarouselItem key={user.id}>
@@ -95,27 +120,50 @@ function MainPage() {
                     </CarouselItem>
                 ))
                 ) : (
-                <p>No users found.</p>
+                <p className="m-6">No users found.</p>
                 )}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
             </Carousel>
+            </div>
 
         </div>
-        <div className=" justify-center items-center min-h-screen p-4">
-                <h2 className="text-lg font-semibold mb-4">People You've Liked:</h2>
+
+        
+        <Tabs defaultValue="likes" className="w-full h-300 p-4">
+        <TabsList>
+            <TabsTrigger value="likes">Likes Sent</TabsTrigger>
+            <TabsTrigger value="liked">Likes Recieved</TabsTrigger>
+        </TabsList>
+        <TabsContent value="likes">
+        <div className=" justify-center items-center min-h-screen p-2">
                 {likes.length === 0 ? (
                     <p>No likes sent yet!</p>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                         {likes.map((like) => (
                             <MatchCard key={like.liked_id} user={like.liked} />
                         ))}
                     </div>
                 )}
             </div>
-
+        </TabsContent>
+        <TabsContent value="liked">
+        <div className=" justify-center items-center min-h-screen p-2">
+                {likedMe.length === 0 ? (
+                    <p>No likes recieved yet!</p>
+                ) : (
+                    <div className="grid grid-cols-1 gap-4">
+                        {likedMe.map((like) => (
+                            <RecievedCard key={like.liker_id} user={like.liker} match={like} />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </TabsContent>
+        </Tabs>
+        </div>
         </>
     );
 }

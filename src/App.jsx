@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
+import { useLocation } from "react-router-dom";
 
 // Routes
 import MainPage from './pages/MainPage';
@@ -13,22 +14,30 @@ import FirstTimeLoginForm from "./components/FirstTimeLoginForm";
 import Navbar from "./components/Navbar";
 import GroupNotificationWatcher from "./contexts/GroupWatcher";
 import UserPage from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
+import WelcomePage from "./pages/WelcomePage";
 
 
 
-// import { useAuth } from './contexts/AuthContexts';
+import { useAuth } from "./contexts/AuthContext";
+import PageNotFoundPage from "./pages/PageNotFound";
+
     function App() {
-    // const { authenticated, onAuthenticated } = useAuth();
+    const { authenticated, onAuthenticated } = useAuth();
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
 
-    // let protectedRoutes;
+    let protectedRoutes;
 
-    // useEffect(() => {
-    //     if(localStorage.getItem('token')){
-    //     onAuthenticated(true);
-    //     }
-    // }, []);
+    useEffect(() => {
+        if(localStorage.getItem('token')){
+        onAuthenticated(true);
+        }
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+    }, []);
 
     const clearError = () => {
         setError(null);
@@ -48,31 +57,69 @@ import UserPage from "./pages/Profile";
     return () => clearInterval(errors);
     }, [error]);
 
-    // if(authenticated){
-    //     // protectedRoutes = (
-    //     // <>
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen w-full">
+            <div className="w-16 h-16 border-4 border-t-transparent border-primary rounded-full animate-spin" />
+            </div>
+        );
+    }
 
-    //     // </>
-    //     // );
-    // }
-
+    if(authenticated){
+            protectedRoutes = (
+            <>
+            <Route path='/social' element={
+                <PrivateRoute>
+                    <SocialPage/>
+                </PrivateRoute>
+                }/>
+            <Route path='/groups/:group_id' element={
+                <PrivateRoute>
+                    <GroupPage/>
+                </PrivateRoute>
+                }/>
+            <Route path='/add_user/:group_id' element={
+                <PrivateRoute>
+                    <AddUserPage/>
+                </PrivateRoute>
+                }/>
+            <Route path='/profile' element={
+                <PrivateRoute>
+                    <UserPage/>
+                </PrivateRoute>
+                }/>
+            <Route path="/home" element={
+                <PrivateRoute>
+                    <MainPage/>
+                </PrivateRoute>
+                }/>
+            </>
+            );
+    }
     return (
         <Router>
-        <GroupNotificationWatcher/>
-        <Navbar/>
-        <Routes>
-        {/* {protectedRoutes} */}
-        <Route path='/' element={<MainPage/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/register' element={<RegisterPage/>}/>
-        <Route path='/social' element={<SocialPage/>}/>
-        <Route path='/groups/:group_id' element={<GroupPage/>}/>
-        <Route path='/add_user/:group_id' element={<AddUserPage/>}/>
-        <Route path='/firstlogin' element={<FirstTimeLoginForm/>}/>
-        <Route path='/profile' element={<UserPage/>}/>
-        </Routes>
-        {/* <Footer/> */}
-    </Router>
+            <GroupNotificationWatcher />
+            <LocationAwareLayout />
+            <Routes>
+                {protectedRoutes}
+                <Route path='/' element={<WelcomePage />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/firstlogin' element={<FirstTimeLoginForm />} />
+                <Route path ='*' element={<PageNotFoundPage />} />
+            </Routes>
+        </Router>
+    );
+}
+
+function LocationAwareLayout() {
+    const location = useLocation();
+    const hideSidebar = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/firstlogin' || location.pathname === '/';
+
+    return (
+        <>
+            { !hideSidebar && <Navbar /> }
+        </>
     );
 }
 

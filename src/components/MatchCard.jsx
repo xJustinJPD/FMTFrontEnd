@@ -12,7 +12,7 @@ const MatchCard = ({ user }) => {
 
     return (
         <>
-                <Card className="w-full bg-base-100 shadow-xl">
+                <Card className="w-2/3 bg-base-100 shadow-xl">
                     <CardHeader>
                         <CardTitle>{user.username}</CardTitle>
                         <CardDescription>{user.role}</CardDescription>
