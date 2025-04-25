@@ -22,42 +22,46 @@ function MainPage() {
     const [filters, setFilters] = useState({
     });
 
-    useEffect(() => {
-        local.post("/users", filters,{
+    const fetchUsers = () => {
+        local.post("/users", filters, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            }
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
         })
-        .then(response => {
-            console.log("RESPONSE", response.data);
-            console.log("my token" + `Bearer ${localStorage.getItem('token')}`)
+        .then((response) => {
             setUserList(response.data);
         })
-        .catch(err => {
+        .catch((err) => {
             console.error(err);
-            if (err.response && err.response.data && err.response.data.message) {
+            if (err.response?.data?.message) {
                 setError(err.response.data.message);
             }
         });
-    }, [filters, local]);
+    };
 
     useEffect(() => {
-        local.get("/likes",{
+        fetchUsers();
+    }, [filters]);
+
+    const fetchLikes = () => {
+        local.get("/likes", {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         })
         .then(response => {
-            console.log("LIKES RESPONSE", response.data);
-
             setLikesList(response.data);
         })
         .catch(err => {
             console.error(err);
-            if (err.response && err.response.data && err.response.data.message) {
+            if (err.response?.data?.message) {
                 setError(err.response.data.message);
             }
         });
+    };
+
+    useEffect(() => {
+        fetchLikes();
     }, []);
 
     useEffect(() => {
@@ -102,69 +106,77 @@ function MainPage() {
     // const userCards = users.map((user) => (
     //     <UserCard key={user.id} user={user} />
     // ));
-
+    
+    const handleLike = () => {
+        fetchLikes();
+        fetchUsers();
+    }
 
 
     return (
-        <>
-        <div className="flex justify-between items-center p-4 bg-secondary">
-        <div className=" justify-center items-center max-h-500 p-4 w-3/4 h-300">
+        <div className="w-full min-h-screen bg-secondary overflow-x-hidden">
+        <div className="flex flex-col xl:flex-row justify-between items-start p-4 bg-secondary gap-4">
+        {/* Filters + User Accordion Section */}
+        <div className="w-full md:w-2/3 lg:w-3/4 max-h-[500px] p-4">
             <FiltersDropdown onChange={setFilters} />
             <div className="flex justify-center items-center mb-4 mt-6">
             <Carousel className="justify-items-center items-center w-full max-w-lg">
                 <CarouselContent className="w-full justify-items-center items-center">
                 {Array.isArray(users) && users.length > 0 ? (
-                users.map((user) => (
+                    users.map((user) => (
                     <CarouselItem key={user.id}>
-                    <UserCard key={user.id} user={user} />
+                        <UserCard key={user.id} user={user} onLikeSent={handleLike} />
                     </CarouselItem>
-                ))
+                    ))
                 ) : (
-                <p className="m-6">No users found.</p>
+                    <p className="m-6">No users found.</p>
                 )}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
             </Carousel>
             </div>
-
         </div>
 
-        
-        <Tabs defaultValue="likes" className="w-full h-300 p-4">
-        <TabsList>
-            <TabsTrigger value="likes">Likes Sent</TabsTrigger>
-            <TabsTrigger value="liked">Likes Recieved</TabsTrigger>
-        </TabsList>
-        <TabsContent value="likes">
-        <div className=" justify-center items-center min-h-screen p-2">
+        {/* Likes Tabs Section */}
+        <div className="w-full md:w-1/3 lg:w-1/3 p-4">
+            <Tabs defaultValue="likes" className="w-40">
+            <TabsList className="flex w-full justify-around mb-4">
+                <TabsTrigger value="likes">Likes Sent</TabsTrigger>
+                <TabsTrigger value="liked">Likes Recieved</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="likes">
+                <div className="min-h-screen">
                 {likes.length === 0 ? (
                     <p>No likes sent yet!</p>
                 ) : (
                     <div className="grid grid-cols-1 gap-4">
-                        {likes.map((like) => (
-                            <MatchCard key={like.liked_id} user={like.liked} />
-                        ))}
+                    {likes.map((like) => (
+                        <MatchCard key={like.liked_id} user={like.liked} />
+                    ))}
                     </div>
                 )}
-            </div>
-        </TabsContent>
-        <TabsContent value="liked">
-        <div className=" justify-center items-center min-h-screen p-2">
+                </div>
+            </TabsContent>
+
+            <TabsContent value="liked">
+                <div className="min-h-screen">
                 {likedMe.length === 0 ? (
-                    <p>No likes recieved yet!</p>
+                    <p>No likes received yet!</p>
                 ) : (
                     <div className="grid grid-cols-1 gap-4">
-                        {likedMe.map((like) => (
-                            <RecievedCard key={like.liker_id} user={like.liker} match={like} />
-                        ))}
+                    {likedMe.map((like) => (
+                        <RecievedCard key={like.liker_id} user={like.liker} match={like} />
+                    ))}
                     </div>
                 )}
-            </div>
-        </TabsContent>
-        </Tabs>
+                </div>
+            </TabsContent>
+            </Tabs>
         </div>
-        </>
+        </div>
+        </div>
     );
 }
 

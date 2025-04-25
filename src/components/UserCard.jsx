@@ -12,7 +12,7 @@ import axios from "../config/Api";
 
 
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, onLikeSent }) => {
         const [local] = axios;
 
     const onPress = async () => {
@@ -25,6 +25,7 @@ const UserCard = ({ user }) => {
                     },
                 }
             )
+            onLikeSent();
             console.log( "like sent", response.data);
         } catch (error) {
             console.error("Error liking user:", error);

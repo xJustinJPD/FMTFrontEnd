@@ -36,7 +36,7 @@ import PageNotFoundPage from "./pages/PageNotFound";
         }
         setTimeout(() => {
             setLoading(false);
-        }, 300);
+        }, 100);
     }, []);
 
     const clearError = () => {

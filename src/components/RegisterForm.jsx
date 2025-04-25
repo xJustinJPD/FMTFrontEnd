@@ -1,6 +1,12 @@
 import axios from '../config/Api';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import riotlogo from '../assets/riot-games-seeklogo.png';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 
 
 const RegisterForm = () => {
@@ -64,25 +70,94 @@ const RegisterForm = () => {
     };
 
     return (
-        <>
-            <div className='grid grid-cols-1 gap-1 justify-items-center m-3 w-full'>
-            <h2 className='m-3'><b>Register:</b></h2>
-            Email: <input onChange={handleForm} onKeyDown={handleKeyDown} type="text" className='border' name="email" value={form.email}  /> <br />
-            Password: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="password" name="password" value={form.password} />
-            Username: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="username" value={form.username} /> <br />
-            First Name: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="first_name" value={form.first_name} /> <br />
-            Last Name: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="last_name" value={form.last_name} /> <br />
-            Role: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="role" value={form.role} /> <br />
-            Bio: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="bio" value={form.bio} /> <br />
-            Riot Name: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="riot_name" value={form.riot_name} /> <br />
-            Riot Tag: #<input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="riot_tag" value={form.riot_tag} /> <br />
-            Riot Region: <input onChange={handleForm} onKeyDown={handleKeyDown} className='border'  type="text" name="riot_region" value={form.riot_region} /> <br />
-            {/* <p className="py-6">or <b><Link to={`/register`}>Register</Link></b></p> */}
+            <div className="flex items-center justify-center min-h-screen bg-muted px-4 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+            {/* Left Card: General Information */}
+            <Card className="shadow-lg">
+                <CardHeader>
+                <CardTitle className="text-left text-3xl font-bold">Register</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                {[
+                    { id: "email", label: "Email", type: "text" },
+                    { id: "password", label: "Password", type: "password" },
+                    { id: "username", label: "Username", type: "text" },
+                    { id: "first_name", label: "First Name", type: "text" },
+                    { id: "last_name", label: "Last Name", type: "text" },
+                    { id: "role", label: "Role", type: "select" , options: ["Top", "Jungle", "Mid", "ADC", "Support"] },
+                    { id: "bio", label: "Bio", type: "text" },
+                ].map(({ id, label, type, options }) => (
+                    <div key={id} className="space-y-2">
+                    <Label htmlFor={id}>{label}</Label>
+                    {type === "select" ? (
+                    <Select
+                    value={form[id]}
+                    onValueChange={(value) => handleForm({ target: { name: id, value } })}
+                >
+                    <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select your role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                    {options.map((option) => (
+                        <SelectItem key={option} value={option}>
+                        {option}
+                        </SelectItem>
+                    ))}
+                    </SelectContent>
+                </Select>
+            ) : (
+                <Input
+                    id={id}
+                    type={type}
+                    name={id}
+                    value={form[id]}
+                    onChange={handleForm}
+                    onKeyDown={handleKeyDown}
+                />
+            )}
+                    </div>
+                ))}
 
-            <button className='btn btn-primary w-20' onClick={handleClick}>Register</button>
-            <p style={errorStyle}>{errorMessage}</p>
+                {errorMessage && <p style={errorStyle}>{errorMessage}</p>}
+                </CardContent>
+            </Card>
+            <div className="space-y-4">
+    
+            {/* Right Card: Riot Info */}
+            <Card className="shadow-lg bg-red-50 h-2/3">
+                <CardHeader>
+                <img src={riotlogo} alt="Riot Games Logo" className="w-24 h-auto mb-4" />
+                </CardHeader>
+                <CardContent className="space-y-4">
+                <CardDescription>Input your RIOT information here so we can retrieve your statistics</CardDescription>
+                </CardContent>
+                <CardContent className="space-y-4">
+                {[
+                    { id: "riot_name", label: "RIOT Name", type: "text" },
+                    { id: "riot_tag", label: "RIOT Tag", type: "text", prefix: "#" },
+                    { id: "riot_region", label: "Region", type: "text" },
+                ].map(({ id, label, type, prefix }) => (
+                    <div key={id} className="space-y-2">
+                    <Label htmlFor={id}>{label}</Label>
+                    <div className="flex items-center">
+                        {prefix && <span className="mr-1 text-lg font-semibold text-gray-600">{prefix}</span>}
+                        <Input
+                        id={id}
+                        type={type}
+                        name={id}
+                        value={form[id]}
+                        onChange={handleForm}
+                        onKeyDown={handleKeyDown}
+                        />
+                    </div>
+                    </div>
+                ))}
+                </CardContent>
+            </Card>
+            <Button className="w-full" onClick={handleClick}>Register</Button>
             </div>
-        </>
+            </div>
+        </div>
     );
 };
 

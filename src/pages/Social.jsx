@@ -67,7 +67,6 @@ function SocialPage() {
                     </div>
                 )}
             </div>
-
         </>
     );
 }
