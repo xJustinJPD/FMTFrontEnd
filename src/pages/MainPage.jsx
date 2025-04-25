@@ -149,7 +149,7 @@ function MainPage() {
             <TabsContent value="likes">
                 <div className="min-h-screen">
                 {likes.length === 0 ? (
-                    <p>No likes sent yet!</p>
+                    <p className="ml-2">No likes sent yet!</p>
                 ) : (
                     <div className="grid grid-cols-1 gap-4">
                     {likes.map((like) => (
@@ -163,7 +163,7 @@ function MainPage() {
             <TabsContent value="liked">
                 <div className="min-h-screen">
                 {likedMe.length === 0 ? (
-                    <p>No likes received yet!</p>
+                    <p className="ml-2">No likes received yet!</p>
                 ) : (
                     <div className="grid grid-cols-1 gap-4">
                     {likedMe.map((like) => (

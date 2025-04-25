@@ -53,21 +53,24 @@ function SocialPage() {
 
 
     return (
-        <>
-        <AddGroupCard/>
-        <div className="flex justify-center items-center min-h-screen p-4">
-                <h2 className="text-lg font-semibold mb-4">Groups you are in:</h2>
-                {groups.length === 0 ? (
-                    <p>You dont have any groups yet!</p>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {groups.map((group) => (
-                            <GroupCard key={group.id} group={group} />
-                        ))}
-                    </div>
-                )}
+        <div className="bg-secondary w-full min-h-screen p-6">
+        {/* Top Row: Title + Add Button */}
+        <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">My Groups:</h2>
+            <AddGroupCard />
+        </div>
+
+        {/* Group Cards Table */}
+        {groups.length === 0 ? (
+            <p>You don't have any groups yet!</p>
+        ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            {groups.map((group) => (
+                <GroupCard key={group.id} group={group} />
+            ))}
             </div>
-        </>
+        )}
+        </div>
     );
 }
 

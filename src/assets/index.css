@@ -194,7 +194,6 @@ body {
 h1{
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #613659;
 }
 
 h2 {
@@ -210,4 +209,12 @@ h3, h4, h5, h6 {
 p {
   margin-bottom: 1rem;
   color: #444;
+}
+
+.primary{
+  background-color: #C197D2;
+}
+
+.text-primary{
+  color: #C197D2;
 }

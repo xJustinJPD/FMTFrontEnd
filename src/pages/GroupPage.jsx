@@ -66,7 +66,7 @@ const GroupPage = () => {
 
 
     return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-4 space-y-4">
+    <div className="flex flex-col items-center justify-center w-full h-full p-4 space-y-4 bg-secondary">
         <GroupCard key={group.id} group={group} />
         <br/>
         <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleClick}>Add User</Button>

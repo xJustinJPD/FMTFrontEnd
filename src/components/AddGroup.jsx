@@ -9,13 +9,22 @@ import {
 } from "@/components/ui/card"
 import axios from '../config/Api';
 import { useState } from 'react';
+import {
+    Sheet,
+    SheetTrigger,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetDescription,
+    SheetFooter,
+    SheetClose,
+    } from "@/components/ui/sheet";
+    import { Button } from "@/components/ui/button";
+    import { Input } from "@/components/ui/input";
 
 
 const AddGroupCard = () => {
     const [local] = axios;
-    const errorStyle = {
-        color: 'red'
-    };
 
     const [form, setForm] = useState({
         group_name: ""
@@ -58,13 +67,41 @@ const AddGroupCard = () => {
 
     return (
         <>
-            <div className='grid grid-cols-1 gap-1 justify-items-center m-3'>
-            <h2 className='m-3'><b>Create New Group:</b></h2>
-            Group Name: <input onChange={handleForm} onKeyDown={handleKeyDown} type="text" className='border' name="group_name" value={form.group_name}  />
+        <Sheet>
+        <SheetTrigger asChild>
+            <Button className="m-4 primary">+ Create New Group</Button>
+        </SheetTrigger>
+        <SheetContent side="right">
+            <SheetHeader>
+            <SheetTitle>Create New Group</SheetTitle>
+            <SheetDescription>
+                Name your group and click create to make a new group.
+            </SheetDescription>
+            </SheetHeader>
 
-            <button className='btn btn-primary w-20' onClick={handleClick}>Create New Group</button>
-            <p style={errorStyle}>{errorMessage}</p>
+            <div className="grid gap-4 p-4">
+            <label htmlFor="group_name" className="text-sm font-medium">Group Name</label>
+            <Input
+                id="group_name"
+                name="group_name"
+                placeholder="Enter group name"
+                value={form.group_name}
+                onChange={handleForm}
+                onKeyDown={handleKeyDown}
+            />
+            {errorMessage && (
+                <p className="text-sm text-red-500 mt-1">{errorMessage}</p>
+            )}
             </div>
+
+            <SheetFooter>
+            <Button onClick={handleClick} className="primary">Create</Button>
+            <SheetClose asChild>
+                <Button variant="outline">Cancel</Button>
+            </SheetClose>
+            </SheetFooter>
+        </SheetContent>
+        </Sheet>
         </>
     );
 };
