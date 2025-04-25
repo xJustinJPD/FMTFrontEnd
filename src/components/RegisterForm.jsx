@@ -11,6 +11,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 
 const RegisterForm = () => {
     const [local] = axios;
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const errorStyle = {
         color: 'red'
@@ -32,6 +33,7 @@ const RegisterForm = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleClick = () => {
+        setLoading(true);
         // let regToken = localStorage.getItem('token');
 
         local.post('/register', {
@@ -53,6 +55,9 @@ const RegisterForm = () => {
         .catch(err => {
             console.error(err);
             setErrorMessage(err.response.message);
+        })
+        .finally(() => {
+            setLoading(false);
         });
     }        
 
@@ -154,7 +159,14 @@ const RegisterForm = () => {
                 ))}
                 </CardContent>
             </Card>
-            <Button className="w-full" onClick={handleClick}>Register</Button>
+            <Button className="w-full" onClick={handleClick} disabled={loading}>    {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    Registering...
+                </div>
+            ) : (
+                "Register"
+            )}</Button>
             </div>
             </div>
         </div>
