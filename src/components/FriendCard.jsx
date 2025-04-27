@@ -17,7 +17,7 @@ const FriendCard = ({ user }) => {
         <>
         <Card className="w-100 shadow-lg p-2">
         <div className='flex justify-between items-center'>
-        <CardTitle className="text-lg font-bold mx-6">{user.username}</CardTitle>
+        <CardTitle className="text-lg font-semibold mx-6">{user.username}</CardTitle>
         {/* Card Header: Username, Riot Logo (Popover), and Discord Logo */}
         <div className="flex items-center justify-around">
         

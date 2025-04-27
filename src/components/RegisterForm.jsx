@@ -7,15 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import riotlogo from '../assets/riot-games-seeklogo.png';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { toast } from "sonner"
 
 
 const RegisterForm = () => {
     const [local] = axios;
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const errorStyle = {
-        color: 'red'
-    };
 
     const [form, setForm] = useState({
         email: "",
@@ -29,8 +27,6 @@ const RegisterForm = () => {
         riot_tag:"",
         riot_region:"",
     });
-
-    const [errorMessage, setErrorMessage] = useState("");
 
     const handleClick = () => {
         setLoading(true);
@@ -54,7 +50,9 @@ const RegisterForm = () => {
         })
         .catch(err => {
             console.error(err);
-            setErrorMessage(err.response.message);
+            toast.error(
+                err?.response?.data?.message || "An unexpected error occurred."
+            );
         })
         .finally(() => {
             setLoading(false);
@@ -122,8 +120,6 @@ const RegisterForm = () => {
             )}
                     </div>
                 ))}
-
-                {errorMessage && <p style={errorStyle}>{errorMessage}</p>}
                 </CardContent>
             </Card>
             <div className="space-y-4">

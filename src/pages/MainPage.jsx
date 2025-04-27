@@ -30,7 +30,8 @@ function MainPage() {
             },
         })
         .then((response) => {
-            setUserList(response.data);
+            const shuffled = [...response.data].sort(() => Math.random() - 0.5);
+            setUserList(shuffled);
             setLoading(false);
         })
         .catch((err) => {
@@ -177,11 +178,12 @@ function MainPage() {
             </TabsContent>
 
             <TabsContent value="liked">
-                <div className="min-h-screen">
+                <div className="min-h-screen w-70">
+                    <p className="text-xs ml-2 mt-2">Click a users name to display their stats</p>
                 {likedMe.length === 0 ? (
                     <p className="ml-2">No likes received yet!</p>
                 ) : (
-                    <div className="grid grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1">
                     {likedMe.map((like) => (
                         <RecievedCard key={like.liker_id} user={like.liker} match={like} />
                     ))}

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useLocation } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner"
 
 // Routes
 import MainPage from './pages/MainPage';
@@ -21,6 +22,7 @@ import WelcomePage from "./pages/WelcomePage";
 
 import { useAuth } from "./contexts/AuthContext";
 import PageNotFoundPage from "./pages/PageNotFound";
+import HelpPage from "./pages/HelpPage";
 
     function App() {
     const { authenticated, onAuthenticated } = useAuth();
@@ -93,6 +95,11 @@ import PageNotFoundPage from "./pages/PageNotFound";
                     <MainPage/>
                 </PrivateRoute>
                 }/>
+                <Route path="/help" element={
+                <PrivateRoute>
+                    <HelpPage/>
+                </PrivateRoute>
+                }/>
             </>
             );
     }
@@ -100,6 +107,7 @@ import PageNotFoundPage from "./pages/PageNotFound";
         <Router>
             <GroupNotificationWatcher />
             <LocationAwareLayout />
+            <Toaster position="top-center" toastOptions={{ className: 'sonner-toast', duration: 4000 }} />
             <Routes>
                 {protectedRoutes}
                 <Route path='/' element={<WelcomePage />} />

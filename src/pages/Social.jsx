@@ -109,7 +109,7 @@ function SocialPage() {
             <div className="flex flex-col lg:flex-row gap-6">
                 {/* Left side: Groups */}
                 <div className="flex-1">
-                    <h2 className="text-lg font-semibold mx-2">My Groups:</h2>
+                    <h1 className="text-lg font-bold mx-2">My Groups:</h1>
 
                     {groups.length === 0 ? (
                         <p className="m-2">You don't have any groups yet!</p>

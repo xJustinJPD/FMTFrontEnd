@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { SidebarProvider } from './components/ui/sidebar';
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 

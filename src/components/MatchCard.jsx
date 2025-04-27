@@ -12,18 +12,11 @@ const MatchCard = ({ user }) => {
 
     return (
         <>
-                <Card className="w-2/3 bg-base-100 shadow-xl">
-                    <CardHeader>
-                        <CardTitle>{user.username}</CardTitle>
-                        <CardDescription>{user.role}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {user.bio}
-                    </CardContent>
-                    {/* <CardFooter>
-                        <p>View Profile</p>
-                    </CardFooter> */}
-                </Card>
+        <Card className="w-50 shadow-lg p-2">
+        <div className='flex justify-around items-center'>
+        <CardTitle className="text-lg mx-6">{user.username}</CardTitle>
+        </div>
+        </Card>
         </>
     );
 };

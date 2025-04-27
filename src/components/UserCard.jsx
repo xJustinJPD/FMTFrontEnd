@@ -113,7 +113,7 @@ const UserCard = ({ user, onLikeSent }) => {
 
         <Drawer>
         <DrawerTrigger asChild className="flex justify-center items-center">
-            <Button className="extra">Expanded Stats</Button>
+            <Button className="extra hover:opacity-80">Expanded Stats</Button>
         </DrawerTrigger>
 
         <DrawerContent className="p-2 flex flex-col items-center space-y-6 bg-secondary">

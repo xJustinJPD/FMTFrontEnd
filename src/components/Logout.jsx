@@ -15,7 +15,7 @@ function LogoutButton() {
     };
 
     return (
-        <Button className="extra" onClick={handleLogout}>Logout</Button>
+        <Button className="extra hover:opacity-80" onClick={handleLogout}>Logout</Button>
     );
 }
 

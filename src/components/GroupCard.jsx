@@ -41,7 +41,9 @@ const GroupCard = ({ group }) => {
                 <Card className="w-full h-18 bg-base-100 shadow-xl" onClick={handleClick}>
                     <div className='flex items-center justify-between'>
                     <CardHeader className="w-full">
-                        <CardTitle>{group.group_name}</CardTitle>
+                        <CardTitle><button>{group.group_name}</button>   {!group.seen && (
+                        <span className="ml-2 text-xs text-red-500 font-bold">NEW</span>
+                    )}</CardTitle>
                     </CardHeader>
                     <div className="flex items-center space-x-2 mr-5">
                         <User className="w-4 h-4 text-muted-foreground" />

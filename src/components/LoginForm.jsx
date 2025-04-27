@@ -6,22 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner"
+
 
 
 const LoginForm = () => {
     const [local] = axios;
     const { onAuthenticated } = useAuth();
     const navigate = useNavigate();
-    const errorStyle = {
-        color: 'red'
-    };
 
     const [form, setForm] = useState({
         email: "",
         password: ""
     });
-
-    const [errorMessage, setErrorMessage] = useState("");
 
     const handleClick = () => {
         // let regToken = localStorage.getItem('token');
@@ -38,7 +35,9 @@ const LoginForm = () => {
         })
         .catch(err => {
             console.error(err);
-            setErrorMessage(err.response.message);
+            toast.error(
+                err?.response?.data?.message || "An unexpected error occurred."
+            );
         });
     }        
 
@@ -88,10 +87,9 @@ const LoginForm = () => {
                     placeholder="••••••••"
                 />
                 </div>
-                <Button className="w-full extra" onClick={handleClick}>
+                <Button className="w-full extra hover:opacity-80" onClick={handleClick}>
                 Login
                 </Button>
-                {errorMessage && <p style={errorStyle}>{errorMessage}</p>}
             </CardContent>
             </Card>
     

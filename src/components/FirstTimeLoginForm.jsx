@@ -27,7 +27,7 @@ const FirstTimeLoginForm = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleDiscord = (token) => {
-        window.location.href = `http://localhost:5000/discord_login?token=${token}`;
+        window.location.href = `https://fmtbackendpy.onrender.com/discord_login?token=${token}`;
     }
 
     const handleClick = () => {
@@ -116,7 +116,7 @@ const FirstTimeLoginForm = () => {
                 disabled={!!password} // Disable if password is provided in state
             />
             </div>
-            <Button className="w-full extra" onClick={handleClick}>
+            <Button className="w-full extra hover:opacity-80" onClick={handleClick}>
             Login
             </Button>
             {errorMessage && <p style={errorStyle}>{errorMessage}</p>}

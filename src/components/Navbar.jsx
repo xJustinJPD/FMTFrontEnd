@@ -1,4 +1,4 @@
-    import { Calendar, Home, Inbox, Search, Settings, UserSquare2Icon } from "lucide-react"
+    import { Calendar, Home, Inbox, Search, Settings, UserSquare2Icon, HelpCircleIcon } from "lucide-react"
     import GroupNotifications from "./GroupNotifs"
     
     import {
@@ -29,6 +29,11 @@ import LogoutButton from "./Logout"
         title: "Profile",
         url: "/profile",
         icon: UserSquare2Icon,
+    },
+    {
+        title: "Help",
+        url: "/help",
+        icon: HelpCircleIcon,
     }
     ]
     
@@ -38,7 +43,7 @@ import LogoutButton from "./Logout"
         <Sidebar>
         <SidebarContent>
             <SidebarGroup>
-            <SidebarGroupLabel>FindMyTeam</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-primary font-bold">FindMyTeam</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu className="flex flex-col justify-between h-full">
                 {items.map((item) => (

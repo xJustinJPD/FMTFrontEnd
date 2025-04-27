@@ -17,6 +17,7 @@ const GroupPage = () => {
             const [local] = axios;
             const [users, setUserList] = useState([]);
             const navigate = useNavigate();
+            const [loading, setLoading] = useState(true);
         
             useEffect(() => {
                 local.get(`/groups/${group_id}`,{
@@ -28,6 +29,7 @@ const GroupPage = () => {
                     console.log("RESPONSE", response.data);
                     setGroup(response.data);
                     setUserList(response.data.users);
+                    setLoading(false);
                 })
                 .catch(err => {
                     console.error(err);
@@ -82,6 +84,14 @@ const GroupPage = () => {
                     setError(err.response.data.message);
                 }
             });
+        }
+
+        if (loading) {
+            return (
+                <div className="flex justify-center items-center min-h-full w-full bg-secondary">
+                    <div className="w-16 h-16 border-4 border-t-transparent border-primary rounded-full animate-spin" />
+                </div>
+            );
         }
 
 
