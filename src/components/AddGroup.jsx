@@ -69,7 +69,7 @@ const AddGroupCard = () => {
         <>
         <Sheet>
         <SheetTrigger asChild>
-            <Button className="m-4 primary">+ Create New Group</Button>
+            <Button className="m-4 primary">+ New Group</Button>
         </SheetTrigger>
         <SheetContent side="right">
             <SheetHeader>

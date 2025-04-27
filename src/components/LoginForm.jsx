@@ -88,7 +88,7 @@ const LoginForm = () => {
                     placeholder="••••••••"
                 />
                 </div>
-                <Button className="w-full" onClick={handleClick}>
+                <Button className="w-full extra" onClick={handleClick}>
                 Login
                 </Button>
                 {errorMessage && <p style={errorStyle}>{errorMessage}</p>}

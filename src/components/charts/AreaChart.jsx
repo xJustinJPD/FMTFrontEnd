@@ -71,10 +71,6 @@ import {
                 axisLine={false}
                 tickMargin={8}
                 />
-                <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
-                />
                 <Area
                 dataKey="kills"
                 type="natural"

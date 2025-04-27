@@ -12,7 +12,7 @@ const WelcomePage = () => {
             <div className="flex flex-col items-center justify-center h-screen gap-6 text-center w-full">
             <h2 className="text-4xl font-bold">Welcome to FindMyTeam</h2>
             <div className="flex gap-4">
-                <Button asChild>
+                <Button className="extra" asChild>
                 <Link to="/login">Login</Link>
                 </Button>
                 <Button variant="outline" asChild>
@@ -24,7 +24,7 @@ const WelcomePage = () => {
             <div className="flex flex-col items-center justify-center h-screen gap-6 text-center w-full">
             <h2 className="text-4xl font-bold">Welcome back!</h2>
             <div className="flex gap-4">
-                <Button asChild>
+                <Button className="extra" asChild>
                 <Link to="/home">Home</Link>
                 </Button>
                 <Button variant="outline" asChild>

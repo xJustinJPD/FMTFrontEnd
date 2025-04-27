@@ -7,41 +7,16 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import axios from '../config/Api';
 import { useState, useEffect } from 'react';
 import GroupNotifications from './GroupNotifs';
+import { User } from 'lucide-react';
 
 const GroupCard = ({ group }) => {
     const navigate = useNavigate()
-    const [local] = axios;
     const [error, setError] = useState("");
-    const [ showToast, setShowToast ] = useState(false);
 
     const handleClick = () => {
         navigate(`/groups/${group.id}`)
-    }
-
-    const handleDelete = () => {
-        local.put(`/groups/${group.id}/delete`,{},{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            }
-        })
-        .then(response => {
-            console.log("RESPONSE", response);
-            navigate(`/social`)
-
-        })
-        .catch(err => {
-            console.error(err);
-            if (err.response && err.response.data && err.response.data.message) {
-                setError(err.response.data.message);
-            }
-        });
-        setShowToast(true);
-        setTimeout(() => {
-            setShowToast(false);
-        }, 3000);
     }
 
         const clearError = () => {
@@ -63,35 +38,17 @@ const GroupCard = ({ group }) => {
 
     return (
         <>
-                <Card className="w-full bg-base-100 shadow-xl" onClick={handleClick}>
-                    <CardHeader>
+                <Card className="w-full h-18 bg-base-100 shadow-xl" onClick={handleClick}>
+                    <div className='flex items-center justify-between'>
+                    <CardHeader className="w-full">
                         <CardTitle>{group.group_name}</CardTitle>
                     </CardHeader>
-                    {/* <CardFooter>
-                        <p>View Profile</p>
-                    </CardFooter> */}
-                    <CardContent>
-                        <CardTitle onClick={handleDelete}>Delete Group</CardTitle>
-                    </CardContent>
+                    <div className="flex items-center space-x-2 mr-5">
+                        <User className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">{group.users ? group.users.length : 0}</span>
+                    </div>
+                    </div>
                 </Card>
-                {showToast && (
-                    <div className="toast toast-top toast-end">
-                        <div className="alert alert-success shadow-lg">
-                            <div>
-                                <span>Group Deleted!</span>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {error && (
-                    <div className="toast toast-top toast-end">
-                        <div className="alert alert-error shadow-lg">
-                            <div>
-                                <span>{error}</span>
-                            </div>
-                        </div>
-                    </div>
-                )}
         </>
     );
 };

@@ -61,12 +61,14 @@ import {
             },
         };
 
-    const totalStats = totalKills + totalDeaths + totalAssists
+    const totalKA = totalKills + totalAssists
+    const KDA = totalKA / (totalDeaths || 1) // Avoid division by zero
+    const totalKDA = KDA.toFixed(2) // KDA per game
 
     return (
             <Card className="flex flex-col" style={{ height: "450px", width: "500px" }}>
             <CardHeader className="items-center pb-0">
-            <CardTitle>Pie Chart - Donut with Text</CardTitle>
+            <CardTitle>KDA Chart</CardTitle>
             <CardDescription>Last 20 Games</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
@@ -105,14 +107,14 @@ import {
                                 y={viewBox.cy}
                                 className="fill-foreground text-3xl font-bold"
                             >
-                                {totalStats.toLocaleString()}
+                                {totalKDA.toLocaleString()}
                             </tspan>
                             <tspan
                                 x={viewBox.cx}
                                 y={(viewBox.cy || 0) + 24}
                                 className="fill-muted-foreground"
                             >
-                                Total KDA
+                                KDA Ratio
                             </tspan>
                             </text>
                         )

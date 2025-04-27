@@ -6,9 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useLocation } from 'react-router-dom';
 
 
 const FirstTimeLoginForm = () => {
+    const location = useLocation();
+    const { email, password } = location.state || { };
     const [local] = axios;
     const { onAuthenticated } = useAuth();
     const errorStyle = {
@@ -17,8 +20,8 @@ const FirstTimeLoginForm = () => {
     const [error, setError] = useState(null);
 
     const [form, setForm] = useState({
-        email: "",
-        password: ""
+        email: email || "",
+        password: password || ""
     });
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -42,7 +45,7 @@ const FirstTimeLoginForm = () => {
         })
         .catch(err => {
             console.error(err);
-            setErrorMessage(err.response.message);
+            setErrorMessage(err.response.msg);
         });
     }        
 
@@ -84,6 +87,7 @@ const FirstTimeLoginForm = () => {
             <CardTitle className="text-center text-3xl font-bold">
             Welcome to FindMyTeam
             </CardTitle>
+            <p className="mt-2 mb-4 text-muted-foreground text-center">Once you log in you will be redirected to connect your discord information</p>
         </CardHeader>
         <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -96,6 +100,7 @@ const FirstTimeLoginForm = () => {
                 onChange={handleForm}
                 onKeyDown={handleKeyDown}
                 placeholder="you@example.com"
+                disabled={!!email} // Disable if email is provided in state
             />
             </div>
             <div className="space-y-2">
@@ -108,9 +113,10 @@ const FirstTimeLoginForm = () => {
                 onChange={handleForm}
                 onKeyDown={handleKeyDown}
                 placeholder="••••••••"
+                disabled={!!password} // Disable if password is provided in state
             />
             </div>
-            <Button className="w-full" onClick={handleClick}>
+            <Button className="w-full extra" onClick={handleClick}>
             Login
             </Button>
             {errorMessage && <p style={errorStyle}>{errorMessage}</p>}

@@ -218,3 +218,15 @@ p {
 .text-primary{
   color: #C197D2;
 }
+
+.extra{
+  background-color: #211522;
+}
+
+.disc{
+  background-color: #7e61ab;
+}
+
+.danger{
+  background-color: #f44336;
+}

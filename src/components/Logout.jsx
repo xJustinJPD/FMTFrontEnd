@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { Button } from "@/components/ui/button";
 
 function LogoutButton() {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ function LogoutButton() {
     };
 
     return (
-        <button onClick={handleLogout}>Logout</button>
+        <Button className="extra" onClick={handleLogout}>Logout</Button>
     );
 }
 

@@ -8,6 +8,10 @@ import { useParams } from "react-router-dom";
 import MatchCard from "@/components/MatchCard";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useLocation } from "react-router-dom";
+
 
 const AddUserPage = () => {
             const { group_id } = useParams();
@@ -15,9 +19,11 @@ const AddUserPage = () => {
             const [local] = axios;
             const [users, setUserList] = useState([]);
             const navigate = useNavigate();
+            const location = useLocation();
+            const { group } = location.state || {}; // Get the group from the location state
         
             useEffect(() => {
-                local.get(`/likes`,{
+                local.get(`/friends`,{
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     }
@@ -74,23 +80,39 @@ const AddUserPage = () => {
             });
         }
 
+        const isUserInGroup = (userId) => {
+            return group.users.some(user => user.id === userId); // Check if user is already in the group
+        };
+
+
 
     return (
     <>
-                <div className="flex justify-center items-center min-h-screen p-4">
-                <h2 className="text-lg font-semibold mb-4">People You've Liked:</h2>
-                {users.length === 0 ? (
-                    <p>No likes sent yet!</p>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {users.map((user) => (
-                            <div key={user.liked_id}>
-                                <MatchCard user={user.liked} />
-                                <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleClick(user.id)}>Add User</Button>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <div className="flex justify-center items-center min-h-screen p-4 w-full bg-secondary">
+                    
+                <Card className="bg-muted h-[400px] border-none w-200">
+                        <CardHeader className="flex items-center justify-between pl-4">
+                            <CardTitle className="text-md">Add Friends:</CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <ScrollArea className="h-[320px] px-4 py-2">
+                                {users.length === 0 ? (
+                                    <p className="text-sm text-muted-foreground">No friends yet!</p>
+                                ) : (
+                                    users.map(friendMatch => {
+                                        const { liker, liked, current_user_id } = friendMatch;
+                                        const friend = liker.id === current_user_id ? liked : liker;
+                                        return (
+                                            <div key={friend.id} className="flex justify-between items-center py-2 border-b border-muted-foreground">
+                                                <span className="text-sm font-medium">{friend.username}</span>
+                                                <Button className="primary hover:opacity-80 transition text-white font-bold py-2 px-4 rounded" onClick={handleClick(friend.id)} disabled={isUserInGroup(friend.id)}>{isUserInGroup(friend.id) ? 'Added' : 'Add'}</Button>
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </ScrollArea>
+                        </CardContent>
+                    </Card>
             </div>
     </>
     );

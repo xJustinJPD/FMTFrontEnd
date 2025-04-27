@@ -40,7 +40,7 @@ import LogoutButton from "./Logout"
             <SidebarGroup>
             <SidebarGroupLabel>FindMyTeam</SidebarGroupLabel>
             <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu className="flex flex-col justify-between h-full">
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
@@ -54,11 +54,14 @@ import LogoutButton from "./Logout"
                     </SidebarMenuButton>
                     </SidebarMenuItem>
                 ))}
-                <LogoutButton />
+
                 </SidebarMenu>
             </SidebarGroupContent>
             </SidebarGroup>
         </SidebarContent>
+                <div className="p-2 w-full flex flex-col gap-2">
+                <LogoutButton className="w-full"/>
+                </div>
         </Sidebar>
     )
     }

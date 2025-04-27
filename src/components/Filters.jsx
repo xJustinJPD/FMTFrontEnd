@@ -24,11 +24,12 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
             <h3 className="text-xs font-semibold mr-4 pt-1">Searching For:</h3>
 
             <div className="mb-4 flex flex-col gap-2 w-115 mr-3">
-                <Select value={filters.role} onValueChange={(value) => handleChange({ target: { name: "role", value } })}>
+                <Select value={filters.role} onValueChange={(value) => handleChange({ target: {  name: "role", value: value === "any" ? "" : value } })}>
                 <SelectTrigger className="p-2 border rounded w-full text-sm">
                     <SelectValue placeholder="Any Role" />
                 </SelectTrigger>
                 <SelectContent>
+                <SelectItem value="any">Any Role</SelectItem>
                     {["Top", "Jungle", "Mid", "ADC", "Support"].map((role) => (
                     <SelectItem key={role} value={role}>
                         {role}
@@ -39,11 +40,12 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
             </div>
 
             <div className="flex flex-col gap-4 w-115">
-                <Select value={filters.rank} onValueChange={(value) => handleChange({ target: { name: "rank", value } })}>
+                <Select value={filters.rank} onValueChange={(value) => handleChange({ target: { name: "rank", value: value === "any" ? "" : value } })}>
                 <SelectTrigger className="p-2 border rounded w-full text-sm">
                     <SelectValue placeholder="Any Rank" />
                 </SelectTrigger>
                 <SelectContent>
+                <SelectItem value="any">Any Role</SelectItem>
                     {[
                     "IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD",
                     "DIAMOND", "MASTER", "GRANDMASTER", "CHALLENGER"

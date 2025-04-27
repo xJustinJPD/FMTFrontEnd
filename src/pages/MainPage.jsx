@@ -21,6 +21,7 @@ function MainPage() {
     const [local] = axios;
     const [filters, setFilters] = useState({
     });
+    const [loading, setLoading] = useState(true);
 
     const fetchUsers = () => {
         local.post("/users", filters, {
@@ -30,6 +31,7 @@ function MainPage() {
         })
         .then((response) => {
             setUserList(response.data);
+            setLoading(false);
         })
         .catch((err) => {
             console.error(err);
@@ -112,16 +114,25 @@ function MainPage() {
         fetchUsers();
     }
 
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-full w-full bg-secondary">
+                <div className="w-16 h-16 border-4 border-t-transparent border-primary rounded-full animate-spin" />
+            </div>
+        );
+    }
+
 
     return (
         <div className="w-full min-h-screen bg-secondary overflow-x-hidden">
         <div className="flex flex-col xl:flex-row justify-between items-start p-4 bg-secondary gap-4">
         {/* Filters + User Accordion Section */}
-        <div className="w-full md:w-2/3 lg:w-3/4 max-h-[500px] p-4">
+        <div className="w-full md:w-2/3 lg:w-3/4 max-h-[500px] p-2">
+        <h1 className="text-lg font-semibold mb-2">Home</h1>
             <FiltersDropdown onChange={setFilters} />
             <div className="flex justify-center items-center mb-4 mt-6">
-            <Carousel className="justify-items-center items-center w-full max-w-lg">
-                <CarouselContent className="w-full justify-items-center items-center">
+            <Carousel className="justify-items-center items-center w-full ">
+                <CarouselContent className="w-full justify-items-center items-center max-w-lg">
                 {Array.isArray(users) && users.length > 0 ? (
                     users.map((user) => (
                     <CarouselItem key={user.id}>
@@ -132,9 +143,14 @@ function MainPage() {
                     <p className="m-6">No users found.</p>
                 )}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious className="lg:absolute left-25 -translate-x-1/2" />
+                <CarouselNext className="lg:absolute right-25 translate-x-1/2" />
             </Carousel>
+
+
+
+
+
             </div>
         </div>
 

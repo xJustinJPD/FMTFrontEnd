@@ -7,6 +7,8 @@ import GroupCard from "@/components/GroupCard";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import FriendCard from "@/components/FriendCard";
+import { User } from 'lucide-react';
 
 const GroupPage = () => {
             const { group_id } = useParams();
@@ -55,24 +57,83 @@ const GroupPage = () => {
         }, [error]);
 
         const userCards = users.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <FriendCard key={user.id} user={user} />
         ));
 
         const handleClick = () => {
-            navigate(`/add_user/${group_id}`)
+            navigate(`/add_user/${group_id}`, { state: { group } });
             console.log("RESPONSE", group_id);
+        }
+
+        const handleDelete = () => {
+            local.put(`/groups/${group.id}/delete`,{},{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            })
+            .then(response => {
+                console.log("RESPONSE", response);
+                navigate(`/social`)
+    
+            })
+            .catch(err => {
+                console.error(err);
+                if (err.response && err.response.data && err.response.data.message) {
+                    setError(err.response.data.message);
+                }
+            });
         }
 
 
 
     return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-4 space-y-4 bg-secondary">
-        <GroupCard key={group.id} group={group} />
-        <br/>
-        <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleClick}>Add User</Button>
-        <br/>
-        {userCards}
-    </div>
+        <div className="flex flex-col w-full min-h-full p-4 space-y-4 bg-secondary relative">
+            {/* Group Header */}
+            <div className="flex justify-between items-center mb-6">
+                {/* Group Title and User Counter */}
+                <div className="flex items-center space-x-4">
+                    <h2 className="text-2xl font-bold">{group.group_name}</h2>
+                    <div className="flex items-center space-x-2 ml-2">
+                        <User className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">{group.users ? group.users.length : 0}</span>
+                    </div>
+                </div>
+
+                {/* Add User Button positioned to the top right */}
+                <Button 
+                    className="absolute top-4 right-4 primary hover:opacity-80 text-white font-bold py-2 px-4 rounded w-40"
+                    onClick={handleClick}
+                >
+                    Add User
+                </Button>
+            </div>
+
+            {/* User Counter */}
+            <div className="text-lg text-gray-600 mt-6">
+                <h3>Members:</h3>
+            </div>
+
+            {/* Group Content */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left Column: User Cards */}
+                <div className="flex flex-col space-y-4">
+                    {userCards}
+                </div>
+
+                {/* Right Column (optional for additional content) */}
+                <div className="flex flex-col justify-start">
+                    {/* Any additional content for right column */}
+                </div>
+            </div>
+
+            {/* Delete Button positioned to the bottom right */}
+            <Button 
+                className="absolute bottom-4 right-4 danger hover:opacity-80 text-white font-bold py-2 px-4 rounded w-40"
+                onClick={handleDelete}
+            >
+                Delete Group
+            </Button>
+        </div>
     );
     }
     

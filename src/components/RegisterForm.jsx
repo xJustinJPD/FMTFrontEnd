@@ -50,7 +50,7 @@ const RegisterForm = () => {
         })
         .then(response => {
             console.log(response);
-            navigate('/firstlogin');
+            navigate('/firstlogin', {state: { email: form.email, password: form.password }});
         })
         .catch(err => {
             console.error(err);
