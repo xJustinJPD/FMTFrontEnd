@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 const FriendCard = ({ user }) => {
 
     return (
-        <>
+        
         <Card className="w-100 shadow-lg p-2">
         <div className='flex justify-between items-center'>
         <CardTitle className="text-lg font-semibold mx-6">{user.username}</CardTitle>
@@ -51,7 +51,7 @@ const FriendCard = ({ user }) => {
         </div>
         </div>
         </Card>
-        </>
+        
     );
 };
 
