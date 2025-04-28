@@ -55,6 +55,10 @@ function SocialPage() {
             if (err.response && err.response.data && err.response.data.message) {
                 setError(err.response.data.message);
             }
+            
+        })
+        .finally(() => {
+            setLoading(false);
         });
     }, [local]);
 
