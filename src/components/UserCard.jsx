@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from './ui/button';
 import axios from "../config/Api";
-import { UserIcon, TrophyIcon, HelpCircleIcon, SwordIcon, HeartIcon } from "lucide-react";
+import { UserIcon, TrophyIcon, HelpCircleIcon, SwordIcon, HeartIcon, StarIcon } from "lucide-react";
 import { Tooltip } from "@/components/ui/tooltip";
 import {
         Drawer,
@@ -46,6 +46,23 @@ const UserCard = ({ user, onLikeSent }) => {
         }
     }
 
+    const onStar = async () => {
+        try{
+            const response = await local.post(
+                `/star/${user.id}`, {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            )
+            onLikeSent();
+            console.log( "star sent", response.data);
+        } catch (error) {
+            console.error("Error liking user:", error);
+        }
+    }
+
     return (
         <>
         <div className="flex flex-col items-center justify-center w-full h-full bg-secondary p-4 space-y-4">
@@ -53,9 +70,14 @@ const UserCard = ({ user, onLikeSent }) => {
             <Card className="w-full max-w-4xl p-4">
                 <div className="flex items-center justify-between mb-4">
                     <CardTitle className="text-2xl font-semibold ml-2">{user.username}</CardTitle>
+                    <div className='flex items-end justify-end gap-2'>
                     <Button onClick={onPress} className="danger outline hover:opacity-80 text-white font-bold py-2 px-4 rounded w-auto">
                         <HeartIcon className="w-4 h-4" />
                     </Button>
+                    <Button onClick={onStar} className="star outline hover:opacity-70 text-white font-bold py-2 px-4 rounded w-auto">
+                        <StarIcon className="w-4 h-4" />
+                    </Button>
+                    </div>
                 </div>
                 <CardContent className="flex items-center justify-around gap-4">
 
