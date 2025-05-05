@@ -23,6 +23,7 @@ import WelcomePage from "./pages/WelcomePage";
 import { useAuth } from "./contexts/AuthContext";
 import PageNotFoundPage from "./pages/PageNotFound";
 import HelpPage from "./pages/HelpPage";
+import UpdatePage from "./pages/UpdateUser";
 
     function App() {
     const { authenticated, onAuthenticated } = useAuth();
@@ -98,6 +99,11 @@ import HelpPage from "./pages/HelpPage";
                 <Route path="/help" element={
                 <PrivateRoute>
                     <HelpPage/>
+                </PrivateRoute>
+                }/>
+                <Route path="/profile/update" element={
+                <PrivateRoute>
+                    <UpdatePage/>
                 </PrivateRoute>
                 }/>
             </>

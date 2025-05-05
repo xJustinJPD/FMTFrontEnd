@@ -7,7 +7,7 @@ import GroupCard from "@/components/GroupCard";
 import { Button } from "@/components/ui/button";
 import { ProfileStatsChart } from "@/components/charts/AreaChart";
 import { StatsPieChart } from "@/components/charts/PieChart";
-import { BarChart, CrosshairIcon, SwordIcon } from "lucide-react";
+import { BarChart, CrosshairIcon, PencilIcon, SwordIcon } from "lucide-react";
 import { ProfileStatsBarChart } from "@/components/charts/BarChart";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -15,6 +15,7 @@ import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/c
 import { UserIcon, TrophyIcon, HelpCircleIcon, Crosshair } from "lucide-react";
 import riotLogo from '../assets/Riot-Games.png';
 import discordLogo from '../assets/discord.png';
+import { useNavigate } from "react-router-dom";
 
 
 const UserPage = () => {
@@ -22,6 +23,7 @@ const UserPage = () => {
             const [local] = axios;
             const [user, setUser] = useState([]);
             const [loading, setLoading] = useState(true);
+            const navigate = useNavigate();
         
             useEffect(() => {
                 local.get(`/profile`,{
@@ -41,7 +43,11 @@ const UserPage = () => {
                     }
                 });
             }, [local]);
-        
+
+
+        const onUpdate = () => {
+            navigate('/profile/update', {state: { username: user.username, bio: user.password, role: user.role }});
+        }
 
         const clearError = () => {
             setError(null);
@@ -80,7 +86,10 @@ const UserPage = () => {
             {/* User Information Card */}
             <Card className="w-full max-w-4xl p-4">
                 <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-6">
                     <CardTitle className="text-2xl font-semibold ml-2">{user.username}</CardTitle>
+                    <PencilIcon className="w-5 h-5 text-muted-foreground hover:opacity-80" onClick={onUpdate} />
+                    </div>
                     <div className="flex items-center space-x-2">
                     <Popover>
                     <PopoverTrigger asChild>
