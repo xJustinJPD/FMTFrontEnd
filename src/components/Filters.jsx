@@ -45,7 +45,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
                     <SelectValue placeholder="Any Rank" />
                 </SelectTrigger>
                 <SelectContent>
-                <SelectItem value="any">Any Role</SelectItem>
+                <SelectItem value="any">Any Rank</SelectItem>
                     {[
                     "IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD",
                     "DIAMOND", "MASTER", "GRANDMASTER", "CHALLENGER"
